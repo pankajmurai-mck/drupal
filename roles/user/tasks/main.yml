@@ -1,0 +1,9 @@
+---
+- name: creating apache group
+  group: name=apache state=present
+
+- name: Creating users
+  user: name={{ item[0].username }} uid={{ item[1].uid }} update_password=always password={{pass|password_hash}} group=apache  home=/home/{{ item[0].username }}
+  with_together:
+  - "{{users}}"
+  - "{{users_uids}}"
