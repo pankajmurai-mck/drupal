@@ -1,0 +1,32 @@
+---
+- hosts: drupal
+  user: root
+  gather_facts: yes
+  connection: ssh
+  vars_files:
+    - "{{ env }}/vars"
+  vars_prompt:
+    - name: pass 
+      prompt: enter admin password  
+      private: no    
+
+  vars:
+    php_version: 73
+    size: 4G
+
+############ user variables ##################################
+    users:
+      - username: digi
+ 
+    users_uids:
+      - uid: 6906
+      
+        
+  roles:
+   - extend_rootFS
+   - user
+   - fs
+   - drupal
+   - {role: logrotation, lvname: "lv_apachelog", lvsize: 4048, file_system: xfs, mount_point: "/var/log/httpd"}
+   - vhost
+   - ruby
