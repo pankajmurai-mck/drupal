@@ -1,0 +1,34 @@
+############# vhost & filesystem varibles ######################
+
+vhost:
+  - virtualhost: drupalqa.intranet.mckinsey.com
+
+    
+aliasname:
+  - alias: drupalqa
+    
+ 
+########## settings.php #############################################
+
+database_var:
+  - database: drupal_qa
+  
+  
+username_var: 
+  - username: drupal_qa
+
+ 
+ 
+password_var:
+  - password: qa@2018@
+
+ 
+  
+host_var: 
+  - host: qa-mysqldb0102-vip.amdc.mckinsey.com
+
+ 
+
+ 
+port_var: 
+  - port: 3311
