@@ -1,0 +1,26 @@
+---
+- name: installing initial libraries
+  yum: name={{ item }} state=installed
+  with_items:
+  - gcc
+  - gcc-c++
+  - git
+  - yum-utils
+  
+- name: Installing ... apache server
+  yum: name={{ item }}
+  with_items:
+     - httpd
+     
+
+- name: Creating vhosts folder
+  file: dest=/etc/httpd/vhosts.d state=directory owner=root group=www mode=775 recurse=yes 
+  
+  
+- name: substitude only first denied to granted
+  shell: sed -i '0,/denied/s/denied/granted/' /etc/httpd/conf/httpd.conf && echo IncludeOptional vhosts.d/*.conf >> /etc/httpd/conf/httpd.conf  
+  
+- name: enable apache
+  service: name=httpd state=started  enabled=yes 
+  
+  
