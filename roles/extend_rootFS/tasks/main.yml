@@ -1,0 +1,13 @@
+---
+- name: check disk space
+  shell: df -h | grep /usr/local | awk '{ print $4 }' | grep -Eo 'M|G'
+  register: disk
+
+- name: extend "/usr/local" filesystem 
+  shell: lvextend -L +5G /dev/mapper/rootvg-local
+  when: disk.stdout == "M"
+  
+
+- name: xfs_growfs execution 
+  shell: xfs_growfs /dev/mapper/rootvg-local
+  when: disk.stdout == "M"
